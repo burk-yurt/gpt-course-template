@@ -10,6 +10,24 @@
 const {onRequest} = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 
+const functions = require('firebase-functions');
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors({ origin: true }));
+app.use(express.json());  // Make sure to use express.json() to parse JSON-bodied requests
+
+app.post('/generate', (req, res) => {
+  // Example processing, replace with your logic
+  const inputText = req.body.text;
+  const generatedText = `Generated text based on: ${inputText}`;
+  res.json({ text: generatedText });
+});
+
+exports.api = functions.https.onRequest(app);
+
+
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
 
